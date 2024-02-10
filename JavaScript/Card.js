@@ -1,6 +1,7 @@
 
 var symbols = ['a','a','b','b','c','c','d','d','e','e','f','f','g','g','h','h'];
 var matchSet = [];
+var progress = 0;
 
 function getSymbols() {
     shuffle(symbols);
@@ -45,23 +46,6 @@ function flipCard(cardNumber) {
         console.log("Cannot flip this card.");
     }
 
-    // if (matchSet.length == 2) {
-    //     if (verifyMatch(cardNumber, symbol)) {
-    //         document.getElementById('card' + matchSet[0].CardNumber).className = "btn btn-success border w-75 py-5";
-    //         card.className = "btn btn-success border w-75 py-5";
-    //         matchSet = [];
-    //     } else {
-    //         console.log(matchSet[0]);
-    //         console.log(matchSet[1]);
-    //         document.getElementById('card' + matchSet[0].CardNumber).className = "btn btn-dark w-75 py-5";
-    //         document.getElementById('card' + matchSet[0].CardNumber).value = 'Card ' + cardNumber;
-    //         card.className = "btn btn-dark w-75 py-5";
-    //         card.value = 'Card ' + cardNumber;
-    //         matchSet = [];
-    //     }
-    // }
-    
-
     return symbol;
 }
 
@@ -78,6 +62,7 @@ async function verifyMatch() {
             document.getElementById('card' + x.CardNumber).className = "btn btn-success border w-75 py-5";
         })
         matchSet = [];
+        updateProgress();
         return true;
     } else {
         console.log("Values do not match.");
@@ -118,4 +103,13 @@ function removeCard(cardNumber) {
         console.log("ERROR: Not Enough cards to remove");
     }
     matchSet.map((x) => console.log(x));
+}
+
+function updateProgress() {
+    progress += 2;
+    let pBar = document.getElementById('progressBar');
+    let percentComplete = (progress / symbols.length) * 100;
+
+    pBar.style.width = `${percentComplete}%`;
+    pBar.ariaValueNow = percentComplete;
 }
